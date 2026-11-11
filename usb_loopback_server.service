@@ -1,0 +1,21 @@
+[Unit]
+Description=USB Loopback Python Server
+# Ensure this runs AFTER the gadgets are created
+After=usb_loopback.service
+# Require the gadget service to succeed before trying to start this
+Requires=usb_loopback.service
+
+[Service]
+# 'simple' is used for continuous, long-running scripts like web/data servers
+Type=simple
+User=root
+# **Fill this line if usb_loopback not installed or not in your python path**
+WorkingDirectory=/path/to/usb_loopback/
+# Execute the python module (Change python3 to python if using python2)
+ExecStart=/usr/bin/python3 -m usb_loopback.server --host 192.168.1.132
+# Automatically restart the server if it crashes
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,15 @@
+[Unit]
+Description=USB Loopback Initialization
+# Ensure the modules from /etc/modules-load.d/ are fully loaded first
+After=local-fs.target systemd-modules-load.service
+
+[Service]
+# Tell systemd this is a script that runs and finishes
+Type=oneshot
+ExecStart=/usr/bin/usb_loopback
+# Keep the service marked as "active" after the script exits
+RemainAfterExit=yes
+User=root
+
+[Install]
+WantedBy=sysinit.target
